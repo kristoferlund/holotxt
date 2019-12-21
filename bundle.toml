@@ -1,0 +1,17 @@
+bridges = []
+
+[[instances]]
+name = "holotxt"
+id = "holotxt_instance"
+dna_hash = "QmP8hH9rF2RBsKX8dZSC6eZcHkq6XhgsFjHN3pC24KWH1R"
+uri = "file:./holotxt_dna/dist/holotxt_dna.dna.json"
+
+[[UIs]]
+name = "holotxt"
+id = "holotxt_id"
+ui_bundle_hash = "Qm34abcde"
+uri = "file:./holotxt_ui/build/ui.zip"
+
+[[UIs.instance_references]]
+ui_handle = "holotxt"
+instance_id = "holotxt_instance" 

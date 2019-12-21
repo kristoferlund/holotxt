@@ -1,0 +1,63 @@
+{
+  "name": "holotxt_ui",
+  "description": "UI for holo.txt",
+  "version": "0.0.1",
+  "author": "Kristofer Lund <kristofer@fmckl.se>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "@holochain/hc-web-client": "^0.5.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "date-fns": "^2.8.1",
+    "lodash": "^4.17.15",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-holochain-hook": "^0.0.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "slate": "^0.55.0",
+    "slate-history": "^0.55.0",
+    "slate-react": "^0.55.0",
+    "tachyons": "^4.11.1",
+    "y-protocols": "^0.1.0",
+    "y-webrtc": "^10.0.3",
+    "yjs": "13.0.0-103"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start:alice": "PORT=3001 REACT_APP_WSPORT=3401 react-scripts start",
+    "start:bob": "PORT=3002 REACT_APP_WSPORT=3402 react-scripts start",
+    "build": "react-scripts build && (cd build && zip -r ui.zip *)",
+    "copy-client": "rm -rf ~/Library/'Application Support'/Holoscape-default/UIs/holotxt && cp -a ./build/. ~/Library/'Application Support'/Holoscape-default/UIs/holotxt",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

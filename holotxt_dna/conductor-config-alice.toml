@@ -1,0 +1,34 @@
+[[agents]]
+id = 'alice'
+name = 'Alice'
+keystore_file = 'alice.key'
+public_address = 'HcScjp4sXHfo5xek8vmAIF633R4z5Y33d5ZyKZp5cRgz8u8r764dq8dU8nA8a4i'
+test_agent = true
+
+[[dnas]]
+file = 'dist/holotxt_dna.dna.json'
+hash = 'QmTXsdZR3YnNsn87WVdXcQTZGmqNyBv8ubKaKGYnz3nsNb'
+id = 'htext'
+
+[[instances]]
+agent = 'alice'
+dna = 'htext'
+id = 'holotxt'
+
+[instances.storage]
+type = "memory"
+
+[[interfaces]]
+admin = true
+id = 'websocket-interface'
+
+[[interfaces.instances]]
+id = 'holotxt'
+
+[interfaces.driver]
+port = 3401
+type = 'websocket'
+
+[network]
+type = 'sim2h'
+sim2h_url = 'wss://localhost:9000'

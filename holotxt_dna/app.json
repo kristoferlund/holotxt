@@ -1,0 +1,14 @@
+{
+  "name": "Holo.txt",
+  "description": "Proof of concept showcasing collaborative notes editing on Holochain.",
+  "authors": [
+    {
+      "identifier": "Kristofer Lund <kristofer@fmckl.se>",
+      "public_key_source": "",
+      "signature": ""
+    }
+  ],
+  "version": "0.0.1",
+  "dht": {},
+  "properties": null
+}

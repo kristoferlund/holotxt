@@ -1,0 +1,41 @@
+{
+  "steps": [
+    {
+      "command": "cargo",
+      "arguments": [
+        "build",
+        "--release",
+        "--target=wasm32-unknown-unknown"
+      ]
+    },
+    {
+      "command": "wasm-gc",
+      "arguments": ["target/wasm32-unknown-unknown/release/holotxt_text.wasm"]
+    },
+    {
+      "command": "wasm-opt",
+      "arguments": [
+        "-Oz",
+        "--vacuum",
+        "target/wasm32-unknown-unknown/release/holotxt_text.wasm"
+      ]
+    },
+    {
+      "command": "wasm2wat",
+      "arguments": [
+        "target/wasm32-unknown-unknown/release/holotxt_text.wasm",
+        "-o",
+        "target/wasm32-unknown-unknown/release/holotxt_text.wat"
+      ]
+    },
+    {
+      "command": "wat2wasm",
+      "arguments": [
+        "target/wasm32-unknown-unknown/release/holotxt_text.wat",
+        "-o",
+        "target/wasm32-unknown-unknown/release/holotxt_text.wasm"
+      ]
+    }
+  ],
+  "artifact": "target/wasm32-unknown-unknown/release/holotxt_text.wasm"
+}
