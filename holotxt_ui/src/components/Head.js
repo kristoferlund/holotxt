@@ -24,15 +24,13 @@ const initHc = async (hc) => {
 }
 
 export const ConnectButton = () => {
-  const [connecting, setConnecting] = useState(false)
   const hc = useHolochain()
 
   const connect = () => {
-    setConnecting(true)
     hc.connect()
   }
 
-  if (connecting) {
+  if (hc.status === CONNECTION_STATUS.CONNECTING) {
     return (
       <Button
         size='mini'
