@@ -13,7 +13,7 @@ export const ScreensIndex = () => {
   return (
     <>
       <p className='f4 lh-copy'>
-        <strong>__holo.txt:</strong>Proof of concept Holochain app showcasing simple collaborative notes editing. Makes use of the <a href='https://github.com/kristoferlund/react-holochain-hook'>useHolochain</a> React hook to simplify UI communication with Holochain, <a href='https://www.slatejs.org/'>Slate</a> for editing and <a href='https://yjs.dev/'>Yjs</a> for realtime sync between clients.
+        <strong>__holo.txt:</strong>Proof of concept Holochain app showcasing simple collaborative notes editing. Makes use of the <a href='https://github.com/kristoferlund/react-holochain-hook' target='_blank'>useHolochain</a> React hook to simplify UI communication with Holochain, <a href='https://www.slatejs.org/' target='_blank'>Slate</a> for editing and <a href='https://yjs.dev/' target='_blank'>Yjs</a> for realtime sync between clients.
       </p>
       <p className='f5 gray mb4'>Agent address: {hc.meta.agent_address}</p>
 
@@ -35,7 +35,7 @@ export const ScreensIndex = () => {
         />
       </Input>
       <p className='f4 lh-copy mt4'>
-        <a href='https://github/kristoferlund/holotxt'>🔗 https://github/
+        <a href='https://github/kristoferlund/holotxt' target='_blank'>🔗 https://github/
         kristoferlund/holotxt</a>
       </p>
     </>
