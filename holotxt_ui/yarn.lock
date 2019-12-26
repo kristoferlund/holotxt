@@ -8672,10 +8672,10 @@ react-error-overlay@^6.0.4:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.4.tgz#0d165d6d27488e660bc08e57bdabaad741366f7a"
   integrity sha512-ueZzLmHltszTshDMwyfELDq8zOA803wQ1ZuzCccXa1m57k1PxSHfflPD5W9YIiTXLs0JTLzoj6o1LuM5N6zzNA==
 
-react-holochain-hook@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-holochain-hook/-/react-holochain-hook-0.0.1.tgz#f951ba5d9b91a5a745d047de57e2d43fb42a07f0"
-  integrity sha512-7I60HMw68RIWWCvX1mhWinqCBLyDfGAopbgbbZsQ/ER9JNDXxFdUxJYkivnk8NNmQD1QN8b/ZtkfEjzHh1a9rg==
+react-holochain-hook@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-holochain-hook/-/react-holochain-hook-0.0.2.tgz#dafc413f94a920fb497da1ff8e219cf50b981a77"
+  integrity sha512-i3ojedgmC0DA1tGfpDEDi8eiXlIe8e0Bd+hsA5XrELtOnnG+rEoP2Di09pcR1+PVgYZpchNslJ/UE61i+eUmFw==
   dependencies:
     "@holochain/hc-web-client" "^0.5.0"
 
