@@ -35,7 +35,7 @@ export const ScreensIndex = () => {
         />
       </Input>
       <p className='f4 lh-copy mt4'>
-        <a href='https://github/kristoferlund/holotxt' target='_blank'>🔗 https://github/
+        <a href='https://github.com/kristoferlund/holotxt' target='_blank'>🔗 https://github.com/
         kristoferlund/holotxt</a>
       </p>
     </>
