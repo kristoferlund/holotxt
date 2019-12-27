@@ -65,4 +65,4 @@ Yes, please! Raise an issue or post a pull request.
 
 ## License
 
-AGPL-3.0
+MIT
