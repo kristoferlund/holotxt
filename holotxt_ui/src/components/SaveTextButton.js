@@ -12,7 +12,7 @@ export const SaveTextButton = (props) => {
   const _save = (fn, data) => {
     hc.connection.callZome(
       'holotxt',
-      'holotxt_text',
+      'txt',
       fn)(data)
       .then((result) => {
         setCreating(false)

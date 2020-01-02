@@ -7,7 +7,7 @@ dna_hash = "QmTXsdZR3YnNsn87WVdXcQTZGmqNyBv8ubKaKGYnz3nsNb"
 uri = "https://github.com/kristoferlund/holotxt/releases/download/v0.0.2/holotxt_dna.dna.json"
 
 [[UIs]]
-name = "holotxt"
+name = "Holo.txt"
 id = "holotxt_id"
 ui_bundle_hash = "Qm34abcde"
 uri = "https://github.com/kristoferlund/holotxt/releases/download/v0.0.2/ui.zip"

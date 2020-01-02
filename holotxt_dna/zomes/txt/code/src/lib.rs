@@ -57,7 +57,7 @@ pub struct RemoteCmd {
 }
 
 #[zome]
-mod holotxt_text_zome {
+mod txt {
 
     #[init]
     fn init() {
@@ -70,7 +70,7 @@ mod holotxt_text_zome {
     }
 
     #[entry_def]
-    fn person_entry_def() -> ValidatingEntryType {
+    fn txt_entry_def() -> ValidatingEntryType {
         entry!(
             name: "text",
             description: "A text to edit collaboratively",
@@ -78,8 +78,8 @@ mod holotxt_text_zome {
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: | _validation_data: hdk::EntryValidationData<Text>| {
-                match _validation_data {
+            validation: | validation_data: hdk::EntryValidationData<Text>| {
+                match validation_data {
                     hdk::EntryValidationData::Create{ entry, .. } => {
                         const MAX_LENGTH: usize = 140;
                         if entry.contents.len() <= MAX_LENGTH {

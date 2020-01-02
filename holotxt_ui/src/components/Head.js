@@ -10,7 +10,7 @@ const initHc = async (hc) => {
     try {
       const res = await hc.connection.callZome(
         'holotxt',
-        'holotxt_text',
+        'txt',
         'get_agent_id'
       )({ args: {} })
       const obj = JSON.parse(res)

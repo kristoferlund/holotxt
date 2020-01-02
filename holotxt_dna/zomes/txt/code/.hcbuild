@@ -15,7 +15,7 @@
     {
       "command": "wasm-opt",
       "arguments": [
-        "-Oz",
+        "-O1",
         "--vacuum",
         "target/wasm32-unknown-unknown/release/holotxt_text.wasm"
       ]

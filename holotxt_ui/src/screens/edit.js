@@ -51,7 +51,7 @@ export const ScreensEdit = ({ match: { params } }) => {
       try {
         hc.connection.callZome(
           'holotxt',
-          'holotxt_text',
+          'txt',
           'get_text')({ 'text_address': textAddress })
           .then((result) => {
             const obj = JSON.parse(result)

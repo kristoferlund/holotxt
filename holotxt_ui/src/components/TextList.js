@@ -24,7 +24,7 @@ export const CreateTextButton = () => {
 
         hc.connection.callZome(
           'holotxt',
-          'holotxt_text',
+          'txt',
           'create_text')(newTextDefaults)
           .then((result) => {
             const obj = JSON.parse(result)
@@ -73,7 +73,7 @@ const ListItem = (props) => {
       try {
         hc.connection.callZome(
           'holotxt',
-          'holotxt_text',
+          'txt',
           'get_text_short')({ 'text_address': props.address })
           .then((result) => {
             const obj = JSON.parse(result)
@@ -114,7 +114,7 @@ export const TextList = () => {
       try {
         hc.connection.callZome(
           'holotxt',
-          'holotxt_text',
+          'txt',
           'list_texts')({ 'agent_address': hc.meta.agent_address })
           .then((result) => {
             const obj = JSON.parse(result)
