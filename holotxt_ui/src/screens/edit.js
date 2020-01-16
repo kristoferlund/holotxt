@@ -22,22 +22,19 @@ const defaultText = (text) => [{
   children: [{ text: text }]
 }]
 
-const defaultTextObj = {
-  name: 'Title',
-  contents: defaultText('Text')
-}
-
 export const ScreensEdit = ({ match: { params } }) => {
-  const hc = useHolochain()
   const { textAddress } = params
+  const ymap = ydoc.getMap(textAddress)
   const [textObj, setTextObj] = useState(null)
   const [loadErrorMsg, setLoadErrorMsg] = useState(null)
+  const hc = useHolochain()
 
-  const ymap = ydoc.getMap(textAddress)
-  ydoc.on('update', update => {
-    Y.applyUpdate(ydoc, update)
-    setTextObj(ymap.get('text_obj'))
-  })
+  useEffect(() => {
+    ydoc.on('update', update => {
+      Y.applyUpdate(ydoc, update)
+      setTextObj(ymap.get('text_obj'))
+    })
+  }, [ymap])
 
   const handleInputChange = (key, value) => {
     const newTextObj = {
@@ -57,7 +54,6 @@ export const ScreensEdit = ({ match: { params } }) => {
           'get_text')({ 'text_address': textAddress })
           .then((result) => {
             const obj = JSON.parse(result)
-            console.log(obj)
             if (!isObject(obj)) {
               throw new Error('Server returned invalid response')
             }
@@ -88,6 +84,9 @@ export const ScreensEdit = ({ match: { params } }) => {
               }
             }
             throw new Error('Server returned invalid response')
+          }, err => {
+            console.error(err)
+            setLoadErrorMsg(err.message)
           })
       } catch (err) {
         console.error(err)
@@ -109,7 +108,10 @@ export const ScreensEdit = ({ match: { params } }) => {
 
   if (!textObj) {
     return (
-      <Loader active inline='centered' />
+      <div style={styles.top}>
+        <Link to='/' className='f4 f3-ns fw6 link dim black'>⟵ Back to list</Link>
+        <Loader active inline='centered' />
+      </div>
     )
   }
 

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 import formatDistance from 'date-fns/formatDistance'
 import isObject from 'lodash/isObject'
+// import useReactRouter from 'use-react-router'
 
 export const CreateTextButton = () => {
   const [creating, setCreating] = useState(false)
@@ -107,7 +108,18 @@ const ListItem = (props) => {
 
 export const TextList = () => {
   const [textList, setTextList] = useState(null)
+  // const [locationKey, setLocationKey] = useState(null)
   const hc = useHolochain()
+  // const { location } = useReactRouter()
+
+  // useEffect(() => {
+  //   if (location.key !== locationKey) {
+  //     if (locationKey !== null) {
+  //       fetchList()
+  //     }
+  //     setLocationKey(location.key)
+  //   }
+  // }, [location])
 
   useEffect(() => {
     if (hc.status === CONNECTION_STATUS.CONNECTED && hc.meta.agent_address) {

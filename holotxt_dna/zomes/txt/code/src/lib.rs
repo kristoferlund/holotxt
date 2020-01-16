@@ -18,8 +18,7 @@ use hdk::{
 use hdk::holochain_core_types::{
     entry::Entry,
     dna::entry_types::Sharing,
-    link::LinkMatch,
-    time::Timeout
+    link::LinkMatch
 };
     
 use hdk::holochain_json_api::{
@@ -81,7 +80,7 @@ mod txt {
             validation: | validation_data: hdk::EntryValidationData<Text>| {
                 match validation_data {
                     hdk::EntryValidationData::Create{ entry, .. } => {
-                        const MAX_LENGTH: usize = 140;
+                        const MAX_LENGTH: usize = 10000;
                         if entry.contents.len() <= MAX_LENGTH {
                             Ok(())
                          } else {
@@ -130,7 +129,6 @@ mod txt {
             author_id: hdk::AGENT_ADDRESS.clone(),
         };
         let entry = Entry::App("text".into(), text.into());
-
         let updated_address = hdk::update_entry(entry, &text_address)?;
         Ok(updated_address)
     } 
@@ -177,7 +175,7 @@ mod txt {
 
         let payload = serde_json::to_string(&remote_cmd).unwrap_or("error".to_string());
     
-        hdk::api::send(agent_address, payload, Timeout::new(60*1000))
+        hdk::api::send(agent_address, payload, 2000.into())
     } 
 
     #[receive]

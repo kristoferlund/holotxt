@@ -23,6 +23,7 @@
     "slate-history": "^0.55.0",
     "slate-react": "^0.55.0",
     "tachyons": "^4.11.1",
+    "use-react-router": "^1.0.7",
     "y-protocols": "^0.1.0",
     "y-webrtc": "^10.0.3",
     "yjs": "13.0.0-103"
