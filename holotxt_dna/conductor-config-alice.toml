@@ -31,4 +31,4 @@ type = 'websocket'
 
 [network]
 type = 'sim2h'
-sim2h_url = 'wss://localhost:9000'
+sim2h_url = 'ws://localhost:9000'

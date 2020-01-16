@@ -7,7 +7,7 @@ test_agent = true
 
 [[dnas]]
 file = 'dist/holotxt_dna.dna.json'
-hash = 'QmTXsdZR3YnNsn87WVdXcQTZGmqNyBv8ubKaKGYnz3nsNb'
+hash = 'QmRKUvdw8zKvh1MKvh9rRBFCrdTei3fAQKLqFTTVyQHUbD'
 id = 'htext'
 
 [[instances]]
@@ -31,4 +31,4 @@ type = 'websocket'
 
 [network]
 type = 'sim2h'
-sim2h_url = 'wss://localhost:9000'
+sim2h_url = 'ws://localhost:9000'
