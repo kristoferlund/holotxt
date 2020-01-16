@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { SaveTextButton } from '../components/SaveTextButton'
 import { TitleInput } from '../components/TitleInput'
 import { WebrtcProvider } from 'y-webrtc'
+import { Loader } from 'semantic-ui-react'
 
 import isObject from 'lodash/isObject'
 
@@ -29,7 +30,8 @@ const defaultTextObj = {
 export const ScreensEdit = ({ match: { params } }) => {
   const hc = useHolochain()
   const { textAddress } = params
-  const [textObj, setTextObj] = useState(defaultTextObj)
+  const [textObj, setTextObj] = useState(null)
+  const [loadErrorMsg, setLoadErrorMsg] = useState(null)
 
   const ymap = ydoc.getMap(textAddress)
   ydoc.on('update', update => {
@@ -55,7 +57,11 @@ export const ScreensEdit = ({ match: { params } }) => {
           'get_text')({ 'text_address': textAddress })
           .then((result) => {
             const obj = JSON.parse(result)
-            if (isObject(obj) && obj.Ok) {
+            console.log(obj)
+            if (!isObject(obj)) {
+              throw new Error('Server returned invalid response')
+            }
+            if (obj.Ok) {
               // Initialize textObj
               const hcTextObj = obj.Ok
               try {
@@ -73,14 +79,39 @@ export const ScreensEdit = ({ match: { params } }) => {
                 : hcTextObj.contents
               hcTextObj.text_address = textAddress
               setTextObj(hcTextObj)
+              return
             }
+            if (obj.Err) {
+              if (obj.Err.Internal) {
+                setLoadErrorMsg(obj.Err.Internal)
+                return
+              }
+            }
+            throw new Error('Server returned invalid response')
           })
       } catch (err) {
         console.error(err)
-        setTextObj(defaultTextObj)
+        setLoadErrorMsg(err.message)
       }
     }
   }, [hc.connection, hc.status, textAddress, ymap])
+
+  if (loadErrorMsg) {
+    return (
+      <div style={styles.top}>
+        <Link to='/' className='f4 f3-ns fw6 link dim black'>⟵ Back to list</Link>
+        <div className='f4 lh-copy pt3'>
+          {loadErrorMsg}
+        </div>
+      </div>
+    )
+  }
+
+  if (!textObj) {
+    return (
+      <Loader active inline='centered' />
+    )
+  }
 
   return (
     <>
