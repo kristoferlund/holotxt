@@ -49,8 +49,8 @@ const logger = {
 const commonConfig = { logger, network }
 
 module.exports = {
-  config1: Config.gen({
-    holotxtInstance: dna
+  config: Config.gen({
+    app: dna
   },
     commonConfig
   ),

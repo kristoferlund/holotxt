@@ -15,46 +15,32 @@ process.on('unhandledRejection', error => {
 
 const orchestrator = new Orchestrator({
   middleware: combine(tapeExecutor(require('tape')), localOnly, callSync),
-
-  globalConfig: {
-    logger: false,
-    network: {
-      type: 'sim2h',
-      sim2h_url: 'wss://localhost:9000',
-    },
-  },
   waiter: {
-    softTimeout: 5000,
-    hardTimeout: 10000,
+    softTimeout: 10000,
+    hardTimeout: 20000,
   },
 })
 
-// const config = {
-//   instances: {
-//     holotxtInstance: Config.dna(dnaPath, 'holotxt_text')
-//   }
-// }
-
-const { config1 } = require('./config')
+const { config } = require('./config')
 
 orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
-  const { alice, bob } = await s.players({ alice: config1, bob: config1 }, true);
+  const { alice, bob } = await s.players({ alice: config, bob: config }, true);
 
   let result;
 
   // Alice - get agent id
-  result = await alice.call('holotxtInstance', "txt", "get_agent_id", {});
+  result = await alice.call('app', "txt", "get_agent_id", {});
   t.ok(result.Ok);
   const alice_agent_id = result.Ok;
 
   // Bob - get agent id
-  result = await bob.call('holotxtInstance', "txt", "get_agent_id", {});
+  result = await bob.call('app', "txt", "get_agent_id", {});
   t.ok(result.Ok);
   const bob_agent_id = result.Ok;
 
   // Alice - create text 1
 
-  result = await alice.call('holotxtInstance', "txt", "create_text", {
+  result = await alice.call('app', "txt", "create_text", {
     "name": "text 1",
     "contents": "contents 1",
     "timestamp": new Date().getTime()
@@ -64,7 +50,7 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Alice - create text 2
 
-  result = await alice.call('holotxtInstance', "txt", "create_text", {
+  result = await alice.call('app', "txt", "create_text", {
     "name": "text 2",
     "contents": "contents 2",
     "timestamp": new Date().getTime()
@@ -77,7 +63,7 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Alice - save new version of text 1
 
-  result = await alice.call('holotxtInstance', "txt", "save_text", {
+  result = await alice.call('app', "txt", "save_text", {
     "text_address": alice_text_address_1,
     "name": "text 1 - version 2",
     "contents": "contents 1 - version 2",
@@ -92,7 +78,7 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Alice - save new version AGAIN of text 1
 
-  result = await alice.call('holotxtInstance', "txt", "save_text", {
+  result = await alice.call('app', "txt", "save_text", {
     "text_address": alice_text_address_1,
     "name": "text 1 - version 3",
     "contents": "contents 1 - version 3",
@@ -107,21 +93,21 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Alice - get text version 1
 
-  result = await alice.call('holotxtInstance', "txt", "get_text", {
+  result = await alice.call('app', "txt", "get_text", {
     "text_address": alice_text_address_1
   });
   t.ok(result.Ok);
 
   // Alice - get text version 1.2
 
-  result = await alice.call('holotxtInstance', "txt", "get_text", {
+  result = await alice.call('app', "txt", "get_text", {
     "text_address": alice_text_address_1_2
   });
   t.ok(result.Ok);
 
   // Alice - list texts
 
-  result = await alice.call('holotxtInstance', "txt", "list_texts", {
+  result = await alice.call('app', "txt", "list_texts", {
     "agent_address": alice_agent_id
   });
   t.ok(result.Ok);
@@ -129,14 +115,14 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Bob - get Alice text 1
 
-  result = await bob.call('holotxtInstance', 'txt', 'get_text', {
+  result = await bob.call('app', 'txt', 'get_text', {
     'text_address': alice_text_address_1
   });
   t.ok(result.Ok);
 
   // Bob - remote save Alice text 1.1
 
-  result = await bob.call('holotxtInstance', "txt", "remote_save_text", {
+  result = await bob.call('app', "txt", "remote_save_text", {
     "agent_address": alice_agent_id,
     "text_address": alice_text_address_1,
     "name": "Bob's edited the filename",
@@ -152,7 +138,7 @@ orchestrator.registerScenario('Test Holo.txt', async (s, t) => {
 
   // Alice - get text version 1
 
-  result = await alice.call('holotxtInstance', "txt", "get_text", {
+  result = await alice.call('app', "txt", "get_text", {
     "text_address": alice_text_address_1
   });
   t.ok(result.Ok);
