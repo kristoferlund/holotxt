@@ -1,15 +1,25 @@
 const path = require('path')
 const { Config } = require('@holochain/tryorama')
 
-const dnaPath = path.join(__dirname, "../dist/holotxt_dna.dna.json")
+const dnaPath = path.join(__dirname, '../dist/holotxt_dna.dna.json')
 const dna = Config.dna(dnaPath, 'txt')
 
 const network = {
   type: 'sim2h',
-  sim2h_url: 'wss://localhost:9000'
+  sim2h_url: 'ws://localhost:9000'
 }
 
-const logger = {
+const quietLoggerConfig = {
+  logger: {
+    type: 'debug',
+    state_dump: false,
+    rules: {
+      rules: [{ exclude: false, pattern: '.*' }]
+    }
+  }
+}
+
+const saneLoggerConfig = {
   type: 'debug',
   rules: {
     rules: [
@@ -43,10 +53,10 @@ const logger = {
       }
     ]
   },
-  state_dump: true
+  state_dump: true,
 }
 
-const commonConfig = { logger, network }
+const commonConfig = { quietLoggerConfig, network }
 
 module.exports = {
   config: Config.gen({
