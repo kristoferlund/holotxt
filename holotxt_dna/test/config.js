@@ -10,12 +10,10 @@ const network = {
 }
 
 const quietLoggerConfig = {
-  logger: {
-    type: 'debug',
-    state_dump: false,
-    rules: {
-      rules: [{ exclude: false, pattern: '.*' }]
-    }
+  type: 'debug',
+  state_dump: false,
+  rules: {
+    rules: [{ exclude: true, pattern: '.*' }]
   }
 }
 

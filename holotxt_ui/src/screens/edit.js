@@ -1,15 +1,16 @@
 import * as Y from 'yjs'
-import React, { useEffect, useState } from 'react'
 
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
+import React, { useEffect, useState } from 'react'
 
 import { Editor } from '../components/Editor'
 import { Link } from 'react-router-dom'
+import { Loader } from 'semantic-ui-react'
 import { SaveTextButton } from '../components/SaveTextButton'
 import { TitleInput } from '../components/TitleInput'
 import { WebrtcProvider } from 'y-webrtc'
-import { Loader } from 'semantic-ui-react'
 
+import { addToHistory } from '../util/textHistory'
 import isObject from 'lodash/isObject'
 
 const ydoc = new Y.Doc()
@@ -32,7 +33,10 @@ export const ScreensEdit = ({ match: { params } }) => {
   useEffect(() => {
     ydoc.on('update', update => {
       Y.applyUpdate(ydoc, update)
-      setTextObj(ymap.get('text_obj'))
+      const t = ymap.get('text_obj')
+      if (t) {
+        setTextObj(t)
+      }
     })
   }, [ymap])
 
@@ -46,7 +50,7 @@ export const ScreensEdit = ({ match: { params } }) => {
   }
 
   useEffect(() => {
-    if (hc.status === CONNECTION_STATUS.CONNECTED) {
+    if (hc.status === CONNECTION_STATUS.CONNECTED && hc.meta.agent_address) {
       try {
         hc.connection.callZome(
           'holotxt',
@@ -59,22 +63,15 @@ export const ScreensEdit = ({ match: { params } }) => {
             }
             if (obj.Ok) {
               // Initialize textObj
-              const hcTextObj = obj.Ok
+              const t = obj.Ok
               try {
-                hcTextObj.contents = JSON.parse(hcTextObj.contents)
+                t.contents = JSON.parse(t.contents)
               } catch (err) {
-                hcTextObj.contents = defaultText(hcTextObj.contents)
+                t.contents = defaultText(t.contents)
               }
-              // Set text obj values to working if present
-              const yTextObj = ymap.get('text_obj')
-              hcTextObj.name = yTextObj && yTextObj.name
-                ? yTextObj.name
-                : hcTextObj.name
-              hcTextObj.contents = yTextObj && yTextObj.contents
-                ? yTextObj.contents
-                : hcTextObj.contents
-              hcTextObj.text_address = textAddress
-              setTextObj(hcTextObj)
+              t.text_address = textAddress
+              setTextObj(t)
+              addToHistory(hc, textAddress)
               return
             }
             if (obj.Err) {
@@ -93,7 +90,7 @@ export const ScreensEdit = ({ match: { params } }) => {
         setLoadErrorMsg(err.message)
       }
     }
-  }, [hc.connection, hc.status, textAddress, ymap])
+  }, [hc.connection, hc.status, textAddress, hc.meta.agent_address])
 
   if (loadErrorMsg) {
     return (
