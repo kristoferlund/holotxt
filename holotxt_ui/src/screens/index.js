@@ -1,10 +1,10 @@
 import { Button, Header, Input } from 'semantic-ui-react'
-import { CreateTextButton, TextList } from '../components/TextList'
+import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
 import React, { useState } from 'react'
 
-import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
-
+import { CreateTextButton } from '../components/CreateTextButton'
 import { Link } from 'react-router-dom'
+import { TextList } from '../components/TextList'
 
 export const ScreensIndex = () => {
   const hc = useHolochain()
