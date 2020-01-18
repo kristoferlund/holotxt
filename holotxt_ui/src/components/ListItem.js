@@ -9,6 +9,7 @@ import isObject from 'lodash/isObject'
 
 export const ListItem = (props) => {
   const [textData, setTextData] = useState(null)
+  const [loaded, setLoaded] = useState(false)
   const hc = useHolochain()
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export const ListItem = (props) => {
             if (isObject(obj) && obj.Ok) {
               setTextData(obj.Ok)
             }
+            setLoaded(true)
           })
       } catch (err) {
         //
@@ -32,7 +34,6 @@ export const ListItem = (props) => {
 
   if (props.address && textData) {
     const fromNow = formatDistance(parseInt(textData.timestamp), Date.now())
-
     return (
       <List.Item>
         <List.Content floated='right'>
@@ -45,6 +46,18 @@ export const ListItem = (props) => {
       </List.Item>
     )
   }
+
+  if (!loaded) {
+    return (
+      <List.Item>
+        <Icon name='file text' color='black' />
+        <List.Content>
+          <div className='w4 bg-black-10 pv2 mb2' />
+        </List.Content>
+      </List.Item>
+    )
+  }
+
   return null
 }
 
