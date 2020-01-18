@@ -27,7 +27,6 @@ export const SaveTextButton = (props) => {
             throw new Error('Server returned invalid response')
           }
           if (obj.Ok) {
-            hc.setMeta('lastListUpdate', new Date().getTime())
             return
           }
           let error = get(obj, 'Err.Internal')

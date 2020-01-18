@@ -15,7 +15,9 @@ export const TextHistoryList = () => {
       const history = getHistory(hc)
       if (history && history.items) {
         setTextList(history.items)
+        return
       }
+      setTextList(null)
     }
   }, [hc, hc.meta.lastListUpdate])
 

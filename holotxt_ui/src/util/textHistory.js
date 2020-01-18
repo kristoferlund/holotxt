@@ -26,3 +26,8 @@ export const getHistory = (hc) => {
     return null
   }
 }
+
+export const clearHistory = (hc) => {
+  localStorage.removeItem('history')
+  hc.setMeta('lastListUpdate', new Date().getTime())
+}

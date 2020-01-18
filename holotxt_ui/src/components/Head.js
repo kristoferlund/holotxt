@@ -107,10 +107,6 @@ export const Head = () => {
   return (
     <Menu fixed='top' inverted>
       <Container>
-        <Menu.Item as={Link} to='/' header>
-          <Icon name='file text' />
-          Holo.txt
-        </Menu.Item>
         <Menu.Item position='right'>
           <div><ConnectionStatus /></div>
         </Menu.Item>

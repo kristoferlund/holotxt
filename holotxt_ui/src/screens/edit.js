@@ -90,7 +90,7 @@ export const ScreensEdit = ({ match: { params } }) => {
         setLoadErrorMsg(err.message)
       }
     }
-  }, [hc.connection, hc.status, textAddress, hc.meta.agent_address])
+  }, [hc, textAddress])
 
   if (loadErrorMsg) {
     return (
