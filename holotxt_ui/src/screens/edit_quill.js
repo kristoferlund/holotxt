@@ -48,7 +48,7 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-  console.log(action)
+  // console.log(action)
   switch (action.type) {
     case 'reset':
       return {
@@ -139,7 +139,7 @@ export const ScreensEdit = ({ match: { params } }) => {
           return
         }
         dispatch({ type: 'draftTextNotAvailable' })
-      }, 2000)
+      }, 1000)
       return () => {
         clearTimeout(timeout)
       }
@@ -157,7 +157,9 @@ export const ScreensEdit = ({ match: { params } }) => {
         .then((txt) => {
           ymeta.set('title', txt.name)
           ymeta.set('author_id', txt.author_id)
-          ytext.insert(0, txt.contents)
+          if (ytext.length === 0) {
+            ytext.insert(0, txt.contents)
+          }
           dispatch({ type: 'hcTextFetched' })
         }, (err) => {
           console.error(err)

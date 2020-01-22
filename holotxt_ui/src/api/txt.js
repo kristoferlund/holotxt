@@ -22,7 +22,7 @@ export const call = (hc, fn, payload) => {
             err.data = obj.Err
             reject(err)
           }
-          reject(new Error('Unspecified error.'))
+          reject(new Error('Unspecified error'))
         }, err => {
           console.error(err)
           reject(err)
@@ -57,8 +57,6 @@ export const fetchTextList = async (hc) => {
 
 export const saveText = async (hc, fn, txt) => {
   try {
-    console.log(fn)
-    console.log(txt)
     await call(hc, fn, txt)
     const newTextListItem = {
       'address': txt.text_address,

@@ -192,7 +192,7 @@ mod txt {
             let text = Text {
                 name: remote_cmd["text"]["name"].as_str().unwrap().to_string(),
                 contents: remote_cmd["text"]["contents"].as_str().unwrap().to_string(),
-                timestamp: u64::from_str_radix(&remote_cmd["text"]["timestamp"].to_string(), 16).unwrap(),
+                timestamp: u64::from_str_radix(&remote_cmd["text"]["timestamp"].to_string(), 10).unwrap(),
                 author_id: hdk::AGENT_ADDRESS.clone(),
             };
 

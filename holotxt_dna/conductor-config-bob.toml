@@ -16,8 +16,8 @@ dna = 'htext'
 id = 'holotxt'
 
 [instances.storage]
-path = "./storage"
-type = "pickle"
+path = "./storage/bob"
+type = "lmdb"
 
 [[interfaces]]
 admin = true
