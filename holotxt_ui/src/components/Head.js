@@ -1,25 +1,17 @@
+import * as txtApi from '../api/txt'
+
 import { Button, Container, Icon, Menu } from 'semantic-ui-react'
-import React, { useEffect } from 'react'
-
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
-
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
 
 const initHc = async (hc) => {
   if (hc && hc.connection) {
-    try {
-      const res = await hc.connection.callZome(
-        'holotxt',
-        'txt',
-        'get_agent_id'
-      )({ args: {} })
-      const obj = JSON.parse(res)
-      if (obj.Ok) {
-        hc.setMeta('agent_address', obj.Ok)
-      }
-    } catch (err) {
-      console.error(err)
-    }
+    txtApi.call(hc, 'get_agent_id', {})
+      .then((address) => {
+        hc.setMeta('agent_address', address)
+      }, (err) => {
+        console.error(err)
+      })
   }
 }
 

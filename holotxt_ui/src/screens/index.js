@@ -1,4 +1,6 @@
-import { Button, Header, Input } from 'semantic-ui-react'
+import * as globalState from '../redux'
+
+import { Button, Input } from 'semantic-ui-react'
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
 import React, { useState } from 'react'
 
@@ -6,8 +8,6 @@ import { CreateTextButton } from '../components/CreateTextButton'
 import { Link } from 'react-router-dom'
 import { TextHistoryList } from '../components/TextHistoryList'
 import { TextList } from '../components/TextList'
-
-import { clearHistory } from '../util/textHistory'
 
 export const ScreensIndex = () => {
   const hc = useHolochain()
@@ -36,12 +36,12 @@ export const ScreensIndex = () => {
             style={styles.openButton}
           />
         </Input>
-
       </div>
 
       <CreateTextButton />
       <h2 className='f3 lh-header mt0'>My texts</h2>
       <TextList />
+
       <Button
         disabled={hc.status !== CONNECTION_STATUS.CONNECTED}
         content='Clear history'
@@ -49,7 +49,7 @@ export const ScreensIndex = () => {
         labelPosition='left'
         floated='right'
         size='mini'
-        onClick={() => { clearHistory(hc) }}
+        onClick={() => { globalState.resetHistory() }}
       />
       <h2 className='f3 lh-header mt0'>Recently viewed</h2>
       <TextHistoryList />

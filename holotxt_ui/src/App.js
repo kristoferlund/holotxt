@@ -12,7 +12,7 @@ import { Container } from 'semantic-ui-react'
 import { Head } from './components/Head'
 import { ProvideHolochain } from 'react-holochain-hook'
 import React from 'react'
-import { ScreensEdit } from './screens/edit'
+import { ScreensEdit } from './screens/edit_quill'
 import { ScreensIndex } from './screens/index'
 
 function App() {

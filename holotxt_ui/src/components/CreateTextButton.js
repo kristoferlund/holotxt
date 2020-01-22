@@ -1,44 +1,40 @@
+import * as globalState from '../redux'
+import * as txtApi from '../api/txt'
+
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
 
 import React, { useState } from 'react'
 import { Button } from 'semantic-ui-react'
 
-import isObject from 'lodash/isObject'
-
 export const CreateTextButton = () => {
-  const [creating, setCreating] = useState(false)
+  const [isCreating, setIsCreating] = useState(false)
   const hc = useHolochain()
 
   const createText = () => {
     if (hc.status === CONNECTION_STATUS.CONNECTED) {
-      setCreating(true)
-      try {
-        const newTextDefaults = {
-          'name': 'New text',
-          'contents': "Let's write something…",
-          'timestamp': new Date().getTime()
-        }
-
-        hc.connection.callZome(
-          'holotxt',
-          'txt',
-          'create_text')(newTextDefaults)
-          .then((result) => {
-            const obj = JSON.parse(result)
-            if (isObject(obj) && obj.Ok) {
-              //
-            }
-            setCreating(false)
-            hc.setMeta('lastListUpdate', new Date().getTime())
-          })
-      } catch (err) {
-        console.error(err)
-        //
+      setIsCreating(true)
+      const defaultNewText = {
+        'name': 'New text',
+        'contents': "Let's write something…",
+        'timestamp': new Date().getTime()
       }
+      txtApi.call(hc, 'create_text', defaultNewText)
+        .then((address) => {
+          globalState.addToList({
+            address: address,
+            name: defaultNewText.name,
+            timestamp: defaultNewText.timestamp
+          })
+          setIsCreating(false)
+        }, (err) => {
+          console.error(err)
+          setIsCreating(false)
+          // TODO Notify unable to create text
+        })
     }
   }
 
-  if (creating) {
+  if (isCreating) {
     return (
       <Button
         loading

@@ -1,31 +1,17 @@
-import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
-import React, { useEffect, useState } from 'react'
+import * as globalState from '../redux'
 
 import { List } from 'semantic-ui-react'
 import { ListItem } from '../components/ListItem'
-
-import { getHistory } from '../util/textHistory'
+import React from 'react'
 
 export const TextHistoryList = () => {
-  const [textList, setTextList] = useState(null)
-  const hc = useHolochain()
+  const textHistoryList = globalState.useTextHistoryList()
 
-  useEffect(() => {
-    if (hc.status === CONNECTION_STATUS.CONNECTED && hc.meta.agent_address) {
-      const history = getHistory(hc)
-      if (history && history.items) {
-        setTextList(history.items)
-        return
-      }
-      setTextList(null)
-    }
-  }, [hc, hc.meta.lastListUpdate])
-
-  if (Array.isArray(textList) && textList.length > 0) {
+  if (Array.isArray(textHistoryList) && textHistoryList.length > 0) {
     return (
       <List>
         {
-          textList.map((textAddress) => <ListItem address={textAddress} />)
+          textHistoryList.map((text) => <ListItem address={text.address} name={text.name} timestamp={text.timestamp} key={text.address} />)
         }
       </List>
     )

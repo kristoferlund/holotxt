@@ -1,4 +1,7 @@
+
 import * as Y from 'yjs'
+import * as globalState from '../redux'
+import * as txtApi from '../api/txt'
 
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
 import React, { useEffect, useState } from 'react'
@@ -9,9 +12,6 @@ import { Loader } from 'semantic-ui-react'
 import { SaveTextButton } from '../components/SaveTextButton'
 import { TitleInput } from '../components/TitleInput'
 import { WebrtcProvider } from 'y-webrtc'
-
-import { addToHistory } from '../util/textHistory'
-import isObject from 'lodash/isObject'
 
 const ydoc = new Y.Doc()
 const provider = new WebrtcProvider('holo.txt room', ydoc, {
@@ -25,14 +25,15 @@ const defaultText = (text) => [{
 
 export const ScreensEdit = ({ match: { params } }) => {
   const { textAddress } = params
+  const hc = useHolochain()
   const ymap = ydoc.getMap(textAddress)
+
   const [textObj, setTextObj] = useState(null)
   const [loadErrorMsg, setLoadErrorMsg] = useState(null)
-  const hc = useHolochain()
+  const [hasFetchedText, setHasFetchedText] = useState(false)
 
   useEffect(() => {
     ydoc.on('update', update => {
-      Y.applyUpdate(ydoc, update)
       const t = ymap.get('text_obj')
       if (t) {
         setTextObj(t)
@@ -46,51 +47,37 @@ export const ScreensEdit = ({ match: { params } }) => {
       [key]: value
     }
     setTextObj(newTextObj)
+    console.log('change')
     ymap.set('text_obj', newTextObj)
   }
 
   useEffect(() => {
-    if (hc.status === CONNECTION_STATUS.CONNECTED && hc.meta.agent_address) {
-      try {
-        hc.connection.callZome(
-          'holotxt',
-          'txt',
-          'get_text')({ 'text_address': textAddress })
-          .then((result) => {
-            const obj = JSON.parse(result)
-            if (!isObject(obj)) {
-              throw new Error('Server returned invalid response')
-            }
-            if (obj.Ok) {
-              // Initialize textObj
-              const t = obj.Ok
-              try {
-                t.contents = JSON.parse(t.contents)
-              } catch (err) {
-                t.contents = defaultText(t.contents)
-              }
-              t.text_address = textAddress
-              setTextObj(t)
-              addToHistory(hc, textAddress)
-              return
-            }
-            if (obj.Err) {
-              if (obj.Err.Internal) {
-                setLoadErrorMsg(obj.Err.Internal)
-                return
-              }
-            }
-            throw new Error('Server returned invalid response')
-          }, err => {
-            console.error(err)
-            setLoadErrorMsg(err.message)
+    if (hc.status === CONNECTION_STATUS.CONNECTED &&
+      hc.meta.agent_address &&
+      !hasFetchedText) {
+      setHasFetchedText(true)
+      txtApi.call(hc, 'get_text', { 'text_address': textAddress })
+        .then((txt) => {
+          txt.text_address = textAddress
+          try {
+            txt.contents = JSON.parse(txt.contents)
+          } catch (err) {
+            txt.contents = defaultText(txt.contents)
+          }
+          setTextObj(txt)
+          globalState.addToHistory({
+            'address': txt.text_address,
+            'name': txt.name,
+            'timestamp': txt.timestamp
           })
-      } catch (err) {
-        console.error(err)
-        setLoadErrorMsg(err.message)
-      }
+        }, (err) => {
+          console.error(err)
+          if (err.data && err.data.Internal) {
+            setLoadErrorMsg(err.data.Internal)
+          }
+        })
     }
-  }, [hc, textAddress])
+  }, [hc, textAddress, hasFetchedText])
 
   if (loadErrorMsg) {
     return (

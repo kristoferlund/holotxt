@@ -1,55 +1,49 @@
+import * as globalState from '../redux'
+
 import { CONNECTION_STATUS, useHolochain } from 'react-holochain-hook'
+import { List, Loader } from 'semantic-ui-react'
 import React, { useEffect, useState } from 'react'
 
-import { List } from 'semantic-ui-react'
 import { ListItem } from '../components/ListItem'
 
-import isObject from 'lodash/isObject'
-
-// import useReactRouter from 'use-react-router'
+import { fetchTextList } from '../api/txt'
 
 export const TextList = () => {
-  const [textList, setTextList] = useState(null)
-  // const [locationKey, setLocationKey] = useState(null)
   const hc = useHolochain()
-  // const { location } = useReactRouter()
-
-  // useEffect(() => {
-  //   if (location.key !== locationKey) {
-  //     if (locationKey !== null) {
-  //       fetchList()
-  //     }
-  //     setLocationKey(location.key)
-  //   }
-  // }, [location])
+  const textList = globalState.useTextList()
+  const [isFetching, setIsFetching] = useState(false)
+  const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
-    if (hc.status === CONNECTION_STATUS.CONNECTED && hc.meta.agent_address) {
-      try {
-        hc.connection.callZome(
-          'holotxt',
-          'txt',
-          'list_texts')({ 'agent_address': hc.meta.agent_address })
-          .then((result) => {
-            const obj = JSON.parse(result)
-            if (isObject(obj) && obj.Ok) {
-              setTextList(obj.Ok.links)
-            }
-          })
-      } catch (err) {
-        //
-      }
+    if (hc.status === CONNECTION_STATUS.CONNECTED &&
+      hc.meta.agent_address &&
+      !hasFetched) {
+      setHasFetched(true)
+      setIsFetching(true)
+      fetchTextList(hc).then(() => {
+        setIsFetching(false)
+      }, (err) => {
+        console.error(err)
+        setIsFetching(false)
+      })
     }
-  }, [hc, hc.meta.lastListUpdate])
+  }, [hc, hasFetched])
 
   if (Array.isArray(textList) && textList.length > 0) {
     return (
       <List>
         {
-          textList.map((text) => <ListItem address={text.address} />)
+          textList.map((text) => <ListItem address={text.address} name={text.name} timestamp={text.timestamp} key={text.address} />)
         }
       </List>
     )
   }
+
+  if (isFetching) {
+    return (
+      <Loader active inline='centered' />
+    )
+  }
+
   return <div className='f4 lh-copy mb3'>No texts here yet.</div>
 }

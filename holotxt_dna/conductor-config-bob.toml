@@ -16,7 +16,8 @@ dna = 'htext'
 id = 'holotxt'
 
 [instances.storage]
-type = "memory"
+path = "./storage"
+type = "pickle"
 
 [[interfaces]]
 admin = true
