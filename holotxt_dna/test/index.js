@@ -16,7 +16,7 @@ const orchestrator = new Orchestrator({
   },
 })
 
-//require('./standard')(orchestrator.registerScenario)
-require('./versions')(orchestrator.registerScenario)
+require('./standard')(orchestrator.registerScenario)
+//require('./versions')(orchestrator.registerScenario)
 
 orchestrator.run()

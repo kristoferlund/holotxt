@@ -39,6 +39,7 @@ export const fetchTextList = async (hc) => {
     const list = await call(hc, 'list_texts',
       { 'agent_address': hc.meta.agent_address })
     const textList = []
+    console.log(list)
     for (let item of list.links) {
       const txt = await call(hc, 'get_text_short',
         { 'text_address': item.address })

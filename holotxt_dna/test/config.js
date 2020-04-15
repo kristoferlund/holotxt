@@ -14,7 +14,8 @@ const quietLoggerConfig = {
   state_dump: false,
   rules: {
     rules: [{ exclude: true, pattern: '.*' }]
-  }
+  },
+  logger: Config.logger({ type: "error" })
 }
 
 const saneLoggerConfig = {
@@ -57,9 +58,16 @@ const saneLoggerConfig = {
 const commonConfig = { quietLoggerConfig, network }
 
 module.exports = {
-  config: Config.gen({
-    app: dna
-  },
-    commonConfig
+  config: Config.gen(
+    {
+      app: dna
+    },
+    {
+      network: {
+        type: "sim2h",
+        sim2h_url: "ws://localhost:9000",
+      },
+      logger: Config.logger({ type: "error" }),
+    }
   ),
 }

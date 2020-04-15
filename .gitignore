@@ -1,2 +1,5 @@
 .DS_Store
 holotxt_dna/storage
+node_modules
+hc-darwin
+holochain-darwin

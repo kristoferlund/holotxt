@@ -55,7 +55,7 @@ export const ScreensIndex = () => {
       <TextHistoryList />
 
       <p className='f4 lh-copy mt4'>
-        Proof of concept Holochain app showcasing simple collaborative notes editing. Makes use of the <a href='https://github.com/kristoferlund/react-holochain-hook' target='_blank' rel='noopener noreferrer'>useHolochain</a> React hook to simplify UI communication with Holochain, <a href='https://www.slatejs.org/' target='_blank' rel='noopener noreferrer'>Slate</a> for editing and <a href='https://yjs.dev/' target='_blank' rel='noopener noreferrer'>Yjs</a> for realtime sync between clients.
+        Proof of concept Holochain app showcasing simple collaborative notes editing. Makes use of the <a href='https://github.com/kristoferlund/react-holochain-hook' target='_blank' rel='noopener noreferrer'>useHolochain</a> React hook to simplify UI communication with Holochain, <a href='https://quilljs.com/' target='_blank' rel='noopener noreferrer'>Quill</a> for editing and <a href='https://yjs.dev/' target='_blank' rel='noopener noreferrer'>Yjs</a> for realtime sync between clients.
       </p>
       <p className='f4 lh-copy mt2'>
         <a href='https://github.com/kristoferlund/holotxt' target='_blank' rel='noopener noreferrer'>🔗 https://github.com/

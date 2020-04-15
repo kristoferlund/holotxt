@@ -3,7 +3,7 @@ bridges = []
 [[instances]]
 name = "holotxt"
 id = "holotxt_instance"
-dna_hash = "QmTXsdZR3YnNsn87WVdXcQTZGmqNyBv8ubKaKGYnz3nsNb"
+dna_hash = "QmRKUvdw8zKvh1MKvh9rRBFCrdTei3fAQKLqFTTVyQHUbD"
 uri = "https://github.com/kristoferlund/holotxt/releases/download/v0.0.2/holotxt_dna.dna.json"
 
 [[UIs]]
