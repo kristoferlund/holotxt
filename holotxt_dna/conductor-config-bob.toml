@@ -7,7 +7,7 @@ test_agent = true
 
 [[dnas]]
 file = 'dist/holotxt_dna.dna.json'
-hash = 'QmRKUvdw8zKvh1MKvh9rRBFCrdTei3fAQKLqFTTVyQHUbD'
+hash = 'QmPAJK4YugqgrnCnQ2Y6CS3R2HyYU1ADVABQUBq9NcWN5y'
 id = 'htext'
 
 [[instances]]

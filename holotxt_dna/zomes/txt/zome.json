@@ -1,4 +1,4 @@
 {
   "name": "txt",
-  "description": "Generated from the rust-zome-template"
+  "description": "Simple zome for saving texts."
 }

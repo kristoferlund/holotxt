@@ -3,7 +3,7 @@ bridges = []
 [[instances]]
 name = "holotxt"
 id = "holotxt_instance"
-dna_hash = "QmRKUvdw8zKvh1MKvh9rRBFCrdTei3fAQKLqFTTVyQHUbD"
+dna_hash = "QmPAJK4YugqgrnCnQ2Y6CS3R2HyYU1ADVABQUBq9NcWN5y"
 uri = "file:./holotxt_dna/dist/holotxt_dna.dna.json"
 
 [[UIs]]
