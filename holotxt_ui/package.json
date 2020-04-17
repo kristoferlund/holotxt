@@ -1,7 +1,7 @@
 {
   "name": "holotxt_ui",
   "description": "UI for holo.txt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Kristofer Lund <kristofer@fmckl.se>",
   "license": "MIT",
   "dependencies": {
